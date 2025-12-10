@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أبو كنزي كار</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #000000;
+            color: #dc2626; /* red-600 tailored */
+        }
+        
+        /* Custom Neon Glow effect for the red elements */
+        .neon-text {
+            text-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+        }
+        
+        .car-anim {
+            animation: driveIn 1.5s ease-out forwards;
+        }
+
+        @keyframes driveIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
+
+    <!-- Background decorative element (abstract car curves) -->
+    <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none z-0">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="w-full h-full stroke-red-600 fill-none" stroke-width="0.5">
+            <path d="M0 50 Q 25 20, 50 50 T 100 50" />
+            <path d="M0 70 Q 25 40, 50 70 T 100 70" />
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <main class="w-full max-w-md bg-black/80 backdrop-blur-sm border border-red-900/30 rounded-2xl p-8 shadow-[0_0_30px_rgba(220,38,38,0.15)] z-10 flex flex-col items-center text-center">
+        
+        <!-- Logo Section -->
+        <div class="mb-8 w-full flex flex-col items-center car-anim">
+            <!-- Stylized Car Icon mimicking the image -->
+            <svg class="w-48 h-24 stroke-red-600 fill-none drop-shadow-[0_0_8px_rgba(220,38,38,0.6)]" viewBox="0 0 200 100" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Roof line -->
+                <path d="M20,60 C40,50 60,20 100,20 C140,20 160,50 180,60" />
+                <!-- Body hint -->
+                <path d="M10,60 L190,60" opacity="0.5" stroke-width="2" />
+            </svg>
+            
+            <h1 class="text-5xl font-black mt-2 neon-text tracking-wide">أبو كنزي كار</h1>
+        </div>
+
+        <!-- Services List -->
+        <div class="w-full space-y-4 text-lg font-bold text-red-500 mb-10">
+            <div class="fade-in-up flex items-center justify-end gap-3 hover:text-red-400 transition-colors" style="animation-delay: 0.2s;">
+                <span>توصيل خاص ومريح لأي مكان</span>
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+            </div>
+            <div class="fade-in-up flex items-center justify-end gap-3 hover:text-red-400 transition-colors" style="animation-delay: 0.3s;">
+                <span>توصيل للمطارات</span>
+                <i data-lucide="plane" class="w-5 h-5"></i>
+            </div>
+            <div class="fade-in-up flex items-center justify-end gap-3 hover:text-red-400 transition-colors" style="animation-delay: 0.4s;">
+                <span>مشاوير يومية</span>
+                <i data-lucide="clock" class="w-5 h-5"></i>
+            </div>
+            <div class="fade-in-up flex items-center justify-end gap-3 hover:text-red-400 transition-colors" style="animation-delay: 0.5s;">
+                <span>رحلات طويلة</span>
+                <i data-lucide="compass" class="w-5 h-5"></i>
+            </div>
+            <div class="fade-in-up flex items-center justify-end gap-3 hover:text-red-400 transition-colors" style="animation-delay: 0.6s;">
+                <span>توصيل للأعمال أو المناسبات</span>
+                <i data-lucide="briefcase" class="w-5 h-5"></i>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="w-full fade-in-up" style="animation-delay: 0.8s;">
+            <a href="tel:01229810148" class="group flex items-center justify-center gap-3 bg-red-900/30 hover:bg-red-700 text-white py-4 px-6 rounded-full border border-red-600 transition-all duration-300 shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:shadow-[0_0_25px_rgba(220,38,38,0.6)]">
+                <span class="text-2xl font-bold pt-1" dir="ltr">01229810148</span>
+                <div class="bg-red-600 p-2 rounded-full group-hover:bg-white group-hover:text-red-600 transition-colors">
+                    <i data-lucide="phone" class="w-6 h-6"></i>
+                </div>
+            </a>
+        </div>
+
+        <!-- Footer Text -->
+        <div class="mt-6 fade-in-up" style="animation-delay: 1s;">
+            <p class="text-xl font-bold text-red-500 neon-text">متاح علي مدار اليوم</p>
+        </div>
+
+    </main>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
