@@ -10,116 +10,208 @@
     <style>
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: #000000;
-            color: #dc2626; /* red-600 tailored */
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
         }
         
-        /* Custom Neon Glow effect for the red elements */
+        /* تأثير النيون للنصوص */
         .neon-text {
-            text-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+            text-shadow: 0 0 10px rgba(220, 38, 38, 0.6), 0 0 20px rgba(220, 38, 38, 0.3);
+        }
+
+        /* خلفية متحركة */
+        .bg-gradient-anim {
+            background: radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            animation: pulse-bg 4s infinite alternate;
+        }
+
+        @keyframes pulse-bg {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0.8; }
         }
         
-        .car-anim {
-            animation: driveIn 1.5s ease-out forwards;
+        /* أنيميشن رسم السيارة */
+        .draw-path {
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: draw 2s ease-out forwards;
         }
 
-        @keyframes driveIn {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        @keyframes draw {
+            to { stroke-dashoffset: 0; }
         }
 
+        /* أنيميشن ظهور العناصر */
         .fade-in-up {
-            animation: fadeInUp 0.8s ease-out forwards;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
+            transform: translateY(30px);
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
+        /* تأثير الزجاج */
+        .glass-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* تأثير هوفر للقائمة */
+        .service-item {
+            transition: all 0.3s ease;
+            border-right: 3px solid transparent;
+        }
+        .service-item:hover {
+            background: linear-gradient(90deg, rgba(220, 38, 38, 0.1) 0%, transparent 100%);
+            border-right-color: #dc2626;
+            padding-right: 10px;
+            text-shadow: 0 0 8px rgba(220, 38, 38, 0.5);
+        }
+
+        /* تحسين أزرار التواصل */
+        .contact-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .contact-btn:hover {
+            transform: translateY(-3px);
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
+<body class="min-h-screen flex flex-col items-center justify-center p-4 relative">
 
-    <!-- Background decorative element (abstract car curves) -->
-    <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none z-0">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="w-full h-full stroke-red-600 fill-none" stroke-width="0.5">
-            <path d="M0 50 Q 25 20, 50 50 T 100 50" />
-            <path d="M0 70 Q 25 40, 50 70 T 100 70" />
+    <!-- خلفية تفاعلية -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-anim rounded-full blur-3xl"></div>
+        <!-- خطوط زخرفية في الخلفية -->
+        <svg class="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#dc2626" stroke-width="0.5" opacity="0.3"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
         </svg>
     </div>
 
-    <!-- Main Container -->
-    <main class="w-full max-w-md bg-black/80 backdrop-blur-sm border border-red-900/30 rounded-2xl p-8 shadow-[0_0_30px_rgba(220,38,38,0.15)] z-10 flex flex-col items-center text-center">
+    <!-- الكارت الرئيسي -->
+    <main class="w-full max-w-md glass-card rounded-3xl p-8 z-10 flex flex-col items-center text-center border-t border-red-500/30">
         
-        <!-- Logo Section -->
-        <div class="mb-8 w-full flex flex-col items-center car-anim">
-            <!-- Stylized Car Icon mimicking the image -->
-            <svg class="w-48 h-24 stroke-red-600 fill-none drop-shadow-[0_0_8px_rgba(220,38,38,0.6)]" viewBox="0 0 200 100" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-                <!-- Roof line -->
-                <path d="M20,60 C40,50 60,20 100,20 C140,20 160,50 180,60" />
-                <!-- Body hint -->
-                <path d="M10,60 L190,60" opacity="0.5" stroke-width="2" />
+        <!-- قسم الشعار -->
+        <div class="mb-8 w-full flex flex-col items-center">
+            <!-- أيقونة السيارة برسم متحرك -->
+            <svg class="w-56 h-28 stroke-red-600 fill-none drop-shadow-[0_0_15px_rgba(220,38,38,0.4)]" viewBox="0 0 200 100" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path class="draw-path" d="M20,60 C40,50 60,20 100,20 C140,20 160,50 180,60" />
+                <path class="draw-path" style="animation-delay: 0.5s;" d="M10,60 L190,60" />
+                <!-- تفاصيل إضافية للعجل -->
+                <circle class="draw-path" style="animation-delay: 1s;" cx="45" cy="60" r="8" opacity="0.8"/>
+                <circle class="draw-path" style="animation-delay: 1.2s;" cx="155" cy="60" r="8" opacity="0.8"/>
             </svg>
             
-            <h1 class="text-5xl font-black mt-2 neon-text tracking-wide">أبو كنزي كار</h1>
+            <h1 class="text-5xl font-black -mt-4 neon-text tracking-wide text-white fade-in-up" style="animation-delay: 0.3s;">أبو كنزي <span class="text-red-600">كار</span></h1>
         </div>
 
-        <!-- Services List -->
-        <div class="w-full space-y-4 text-lg font-bold text-red-500 mb-10">
-            <div class="fade-in-up flex items-center justify-end gap-3 hover:text-red-400 transition-colors" style="animation-delay: 0.2s;">
-                <span>توصيل خاص ومريح لأي مكان</span>
-                <i data-lucide="map-pin" class="w-5 h-5"></i>
+        <!-- قائمة الخدمات -->
+        <div class="w-full space-y-3 text-lg font-bold text-gray-200 mb-8 text-right">
+            <div class="fade-in-up service-item p-2 rounded-lg flex items-center justify-between cursor-default group" style="animation-delay: 0.5s;">
+                <div class="flex items-center gap-3">
+                    <div class="bg-red-900/20 p-2 rounded-lg group-hover:bg-red-600 transition-colors duration-300">
+                        <i data-lucide="map-pin" class="w-5 h-5 text-red-500 group-hover:text-white"></i>
+                    </div>
+                    <span>توصيل خاص ومريح لأي مكان</span>
+                </div>
             </div>
-            <div class="fade-in-up flex items-center justify-end gap-3 hover:text-red-400 transition-colors" style="animation-delay: 0.3s;">
-                <span>توصيل للمطارات</span>
-                <i data-lucide="plane" class="w-5 h-5"></i>
+            
+            <div class="fade-in-up service-item p-2 rounded-lg flex items-center justify-between cursor-default group" style="animation-delay: 0.6s;">
+                <div class="flex items-center gap-3">
+                    <div class="bg-red-900/20 p-2 rounded-lg group-hover:bg-red-600 transition-colors duration-300">
+                        <i data-lucide="plane" class="w-5 h-5 text-red-500 group-hover:text-white"></i>
+                    </div>
+                    <span>توصيل للمطارات</span>
+                </div>
             </div>
-            <div class="fade-in-up flex items-center justify-end gap-3 hover:text-red-400 transition-colors" style="animation-delay: 0.4s;">
-                <span>مشاوير يومية</span>
-                <i data-lucide="clock" class="w-5 h-5"></i>
+
+            <div class="fade-in-up service-item p-2 rounded-lg flex items-center justify-between cursor-default group" style="animation-delay: 0.7s;">
+                <div class="flex items-center gap-3">
+                    <div class="bg-red-900/20 p-2 rounded-lg group-hover:bg-red-600 transition-colors duration-300">
+                        <i data-lucide="clock" class="w-5 h-5 text-red-500 group-hover:text-white"></i>
+                    </div>
+                    <span>مشاوير يومية</span>
+                </div>
             </div>
-            <div class="fade-in-up flex items-center justify-end gap-3 hover:text-red-400 transition-colors" style="animation-delay: 0.5s;">
-                <span>رحلات طويلة</span>
-                <i data-lucide="compass" class="w-5 h-5"></i>
+
+            <div class="fade-in-up service-item p-2 rounded-lg flex items-center justify-between cursor-default group" style="animation-delay: 0.8s;">
+                <div class="flex items-center gap-3">
+                    <div class="bg-red-900/20 p-2 rounded-lg group-hover:bg-red-600 transition-colors duration-300">
+                        <i data-lucide="compass" class="w-5 h-5 text-red-500 group-hover:text-white"></i>
+                    </div>
+                    <span>رحلات طويلة</span>
+                </div>
             </div>
-            <div class="fade-in-up flex items-center justify-end gap-3 hover:text-red-400 transition-colors" style="animation-delay: 0.6s;">
-                <span>توصيل للأعمال أو المناسبات</span>
-                <i data-lucide="briefcase" class="w-5 h-5"></i>
+
+            <div class="fade-in-up service-item p-2 rounded-lg flex items-center justify-between cursor-default group" style="animation-delay: 0.9s;">
+                <div class="flex items-center gap-3">
+                    <div class="bg-red-900/20 p-2 rounded-lg group-hover:bg-red-600 transition-colors duration-300">
+                        <i data-lucide="briefcase" class="w-5 h-5 text-red-500 group-hover:text-white"></i>
+                    </div>
+                    <span>توصيل للأعمال أو المناسبات</span>
+                </div>
             </div>
         </div>
 
-        <!-- Call to Action -->
-        <div class="w-full fade-in-up" style="animation-delay: 0.8s;">
-            <a href="tel:01229810148" class="group flex items-center justify-center gap-3 bg-red-900/30 hover:bg-red-700 text-white py-4 px-6 rounded-full border border-red-600 transition-all duration-300 shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:shadow-[0_0_25px_rgba(220,38,38,0.6)]">
-                <span class="text-2xl font-bold pt-1" dir="ltr">01229810148</span>
-                <div class="bg-red-600 p-2 rounded-full group-hover:bg-white group-hover:text-red-600 transition-colors">
-                    <i data-lucide="phone" class="w-6 h-6"></i>
+        <!-- أزرار التواصل -->
+        <div class="w-full flex flex-col gap-3 fade-in-up" style="animation-delay: 1.1s;">
+            
+            <!-- زر الاتصال -->
+            <a href="tel:01229810148" class="contact-btn group flex items-center justify-between bg-gradient-to-r from-red-950/50 to-red-900/50 hover:from-red-700 hover:to-red-600 border border-red-500/30 text-white p-3 px-5 rounded-2xl shadow-lg shadow-red-900/20">
+                <div class="flex items-center gap-3">
+                    <div class="bg-red-500/20 p-2 rounded-xl group-hover:bg-white/20 transition-colors">
+                        <i data-lucide="phone" class="w-6 h-6 text-red-400 group-hover:text-white"></i>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <span class="text-xs text-red-300/80 font-bold">اتصال مباشر</span>
+                        <span class="text-lg font-bold font-mono tracking-wider" dir="ltr">01229810148</span>
+                    </div>
+                </div>
+                <div class="opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                </div>
+            </a>
+
+            <!-- زر واتساب -->
+            <a href="https://wa.me/201229810148" target="_blank" class="contact-btn group flex items-center justify-between bg-gradient-to-r from-emerald-950/50 to-emerald-900/50 hover:from-emerald-600 hover:to-emerald-500 border border-emerald-500/30 text-white p-3 px-5 rounded-2xl shadow-lg shadow-emerald-900/20">
+                <div class="flex items-center gap-3">
+                    <div class="bg-emerald-500/20 p-2 rounded-xl group-hover:bg-white/20 transition-colors">
+                        <!-- أيقونة واتساب SVG -->
+                        <svg class="w-6 h-6 fill-emerald-400 group-hover:fill-white transition-colors" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <span class="text-xs text-emerald-300/80 font-bold">راسلنا واتساب</span>
+                        <span class="text-lg font-bold font-mono tracking-wider" dir="ltr">01229810148</span>
+                    </div>
+                </div>
+                <div class="opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
                 </div>
             </a>
         </div>
 
-        <!-- Footer Text -->
-        <div class="mt-6 fade-in-up" style="animation-delay: 1s;">
-            <p class="text-xl font-bold text-red-500 neon-text">متاح علي مدار اليوم</p>
+        <!-- نص تذييل الصفحة -->
+        <div class="mt-8 fade-in-up" style="animation-delay: 1.3s;">
+            <p class="text-lg font-bold text-red-500/80 tracking-widest uppercase text-xs border-t border-red-900/50 pt-4">خدمة مميزة علي مدار 24 ساعة</p>
         </div>
 
     </main>
 
     <script>
-        // Initialize Icons
         lucide.createIcons();
     </script>
 </body>
